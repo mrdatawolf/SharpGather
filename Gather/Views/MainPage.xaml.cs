@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 using System.Diagnostics;
 using HttpUtils;
+using Windows.Storage;
 
 namespace Gather.Views
 {
@@ -24,8 +25,8 @@ namespace Gather.Views
         {
             InitializeComponent();
             GetAutomattedResources();
-            login_button.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.CornflowerBlue);
-            gatherLocalData();
+            loginButton.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.CornflowerBlue);
+            GatherLocalData();
 
         }
 
@@ -45,7 +46,7 @@ namespace Gather.Views
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 
-        public void gatherLocalData()
+        public void GatherLocalData()
         {
             Windows.Storage.ApplicationDataContainer container = localSettings.CreateContainer("GatherContainer", Windows.Storage.ApplicationDataCreateDisposition.Always);
             if (localSettings.Containers.ContainsKey("GatherContainer"))
@@ -54,12 +55,14 @@ namespace Gather.Views
                 {
                     accessToken = localSettings.Containers["GatherContainer"].Values["accessToken"].ToString();
                     restClient.AccessToken = accessToken;
-                    statusText.Text = "Found token: " + accessToken;
+                    statusText.Text = "Authenticated!";
                     isLoggedIn = true;
-                    login_button.IsEnabled = false;
+                    loginButton.IsEnabled = false;
+                    emailTextbox.IsEnabled = false;
+                    passwordBox.IsEnabled = false;
                 } else
                 {
-                    statusText.Text = "No token found";
+                    statusText.Text = "Not logged in";
                 }
             }
         }
@@ -69,10 +72,9 @@ namespace Gather.Views
             {
                 restClient.Login(apiBaseUrl: apiBaseUrl, email: email, password: password);
                 localSettings.Containers["GatherContainer"].Values["accessToken"] = restClient.AccessToken;
-                statusText.Text = "Gathered the token: " + restClient.AccessToken;
                 statusText.Text = "Logged In";
                 isLoggedIn = true;
-                login_button.IsEnabled = false;
+                loginButton.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -129,7 +131,7 @@ namespace Gather.Views
             password = passwordBox.Password;
         }
 
-        private void login_button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void loginButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             if(isLoggedIn)
             {
