@@ -1,0 +1,9 @@
+C:\Users\Patrick\Source\Repos\Gather\Gather.Core\bin\Debug\netstandard2.0\Gather.Core.deps.json
+C:\Users\Patrick\Source\Repos\Gather\Gather.Core\bin\Debug\netstandard2.0\Gather.Core.dll
+C:\Users\Patrick\Source\Repos\Gather\Gather.Core\bin\Debug\netstandard2.0\Gather.Core.pdb
+C:\Users\Patrick\Source\Repos\Gather\Gather.Core\obj\Debug\netstandard2.0\Gather.Core.csproj.AssemblyReference.cache
+C:\Users\Patrick\Source\Repos\Gather\Gather.Core\obj\Debug\netstandard2.0\Gather.Core.AssemblyInfoInputs.cache
+C:\Users\Patrick\Source\Repos\Gather\Gather.Core\obj\Debug\netstandard2.0\Gather.Core.AssemblyInfo.cs
+C:\Users\Patrick\Source\Repos\Gather\Gather.Core\obj\Debug\netstandard2.0\Gather.Core.csproj.CoreCompileInputs.cache
+C:\Users\Patrick\Source\Repos\Gather\Gather.Core\obj\Debug\netstandard2.0\Gather.Core.dll
+C:\Users\Patrick\Source\Repos\Gather\Gather.Core\obj\Debug\netstandard2.0\Gather.Core.pdb
