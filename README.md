@@ -1,4 +1,4 @@
-![alt text](https://github.com/mrdatawolf/SharpGather/blob/master/SETradeHouse_logo_core.png?raw=true)
+
 # SharpGather [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 C# client for Phase 1 - is a client application that lets you play the game just like you would on the web.
