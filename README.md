@@ -1,7 +1,7 @@
 
 # SharpGather [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-C# client for Phase 1 - is a client application that lets you play the game just like you would on the web.
+C# client for Phase 1 - a client application that lets you play the game just like you would on the web.
  
 ##Quick Start (for local development and testing)
 1. You need a development environment like visual studio.
@@ -11,7 +11,7 @@ C# client for Phase 1 - is a client application that lets you play the game just
 ##Current Roadmap
 Road to 1.0 MVP
 1. ~~Allow login using the API on the web~~
-2. Save data locally so the access token is saved.
+2. ~~Save data locally so the access token is saved.~~
 2. Populate the storage balances.
 3. Populate the bank balance.
 4. Populate the gather page so it shows the same data as the web version.

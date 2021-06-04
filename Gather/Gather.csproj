@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activation\ActivationHandler.cs" />
+    <Compile Include="LoginObject.cs" />
     <Compile Include="RestClient.xaml.cs">
       <DependentUpon>RestClient.xaml</DependentUpon>
     </Compile>

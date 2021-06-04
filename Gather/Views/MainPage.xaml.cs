@@ -9,9 +9,12 @@ namespace Gather.Views
 {
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         string apiBaseUrl = "https://phase1.datawolf.online/api";
         string email;
         string password;
+        string accessToken;
         bool isLoggedIn = false;
 
         RestClient restClient = new RestClient();
@@ -22,6 +25,7 @@ namespace Gather.Views
             InitializeComponent();
             GetAutomattedResources();
             login_button.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.CornflowerBlue);
+            gatherLocalData();
 
         }
 
@@ -41,12 +45,31 @@ namespace Gather.Views
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 
-
+        public void gatherLocalData()
+        {
+            Windows.Storage.ApplicationDataContainer container = localSettings.CreateContainer("GatherContainer", Windows.Storage.ApplicationDataCreateDisposition.Always);
+            if (localSettings.Containers.ContainsKey("GatherContainer"))
+            {
+                if(localSettings.Containers["GatherContainer"].Values.ContainsKey("accessToken"))
+                {
+                    accessToken = localSettings.Containers["GatherContainer"].Values["accessToken"].ToString();
+                    restClient.AccessToken = accessToken;
+                    statusText.Text = "Found token: " + accessToken;
+                    isLoggedIn = true;
+                    login_button.IsEnabled = false;
+                } else
+                {
+                    statusText.Text = "No token found";
+                }
+            }
+        }
         public void DoLogin()
         {
             try
             {
                 restClient.Login(apiBaseUrl: apiBaseUrl, email: email, password: password);
+                localSettings.Containers["GatherContainer"].Values["accessToken"] = restClient.AccessToken;
+                statusText.Text = "Gathered the token: " + restClient.AccessToken;
                 statusText.Text = "Logged In";
                 isLoggedIn = true;
                 login_button.IsEnabled = false;
