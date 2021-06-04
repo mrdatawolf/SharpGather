@@ -15,7 +15,7 @@
                     <TextBox x:Name="emailTextbox" Text="" TextWrapping="NoWrap" FontFamily="Tahoma" TextChanged="email_TextChanged" Header="Email" PlaceholderText="Enter your email address"/>
                     <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Tahoma" PasswordChanged="passwordBox_PasswordChanged" Header="Password" PlaceholderText="Enter you password"/>
                     <TextBlock x:Name="statusText" Margin="10" HorizontalAlignment="Center" />
-                    <Button x:Name="login_button" Content="LOGIN"  VerticalAlignment="Top" Height="79" Width="306" HorizontalAlignment="Center" Click="login_button_Click"/>
+                    <Button x:Name="loginButton" Content="LOGIN"  VerticalAlignment="Top" Height="79" Width="306" HorizontalAlignment="Center" Click="loginButton_Click"/>
                 </StackPanel>
             </Grid>
             <!--

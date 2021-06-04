@@ -17,6 +17,8 @@ namespace Gather.Views
     // TODO WTS: Change the URL for your privacy policy in the Resource File, currently set to https://YourPrivacyUrlGoesHere
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
+        public string AccessToken;
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         private ElementTheme _elementTheme = ThemeSelectorService.Theme;
 
         public ElementTheme ElementTheme
@@ -38,6 +40,7 @@ namespace Gather.Views
         public SettingsPage()
         {
             InitializeComponent();
+            GatherLocalData();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -85,5 +88,19 @@ namespace Gather.Views
         }
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        private void GatherLocalData()
+        {
+            AccessToken = "no token found";
+            Windows.Storage.ApplicationDataContainer container = localSettings.CreateContainer("GatherContainer", Windows.Storage.ApplicationDataCreateDisposition.Always);
+            if (localSettings.Containers.ContainsKey("GatherContainer"))
+            {
+                if (localSettings.Containers["GatherContainer"].Values.ContainsKey("accessToken"))
+                {
+                    AccessToken = localSettings.Containers["GatherContainer"].Values["accessToken"].ToString();
+                }
+            }
+            tokenText.Text = AccessToken;
+        }
     }
 }

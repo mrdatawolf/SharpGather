@@ -51,7 +51,16 @@ namespace Gather
 
         private ActivationService CreateActivationService()
         {
-            return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            Windows.Storage.ApplicationDataContainer container = localSettings.CreateContainer("GatherContainer", Windows.Storage.ApplicationDataCreateDisposition.Always);
+            if (localSettings.Containers.ContainsKey("GatherContainer") && localSettings.Containers["GatherContainer"].Values.ContainsKey("accessToken"))
+            {
+                return new ActivationService(this, typeof(Views.GatherPage), new Lazy<UIElement>(CreateShell));
+            }
+            else
+            {
+                return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
+            }
         }
 
         private UIElement CreateShell()
