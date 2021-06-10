@@ -8,15 +8,15 @@
   IgnorableNamespaces="uap mp genTemplate">
 
   <Identity
-    Name="B80B1FCA-B7E4-49BF-8D59-27C91E539E51"
-    Publisher="CN=Patrick"
-    Version="1.0.0.0" />
+    Name="49023MoonBeam.Phase1Gather"
+    Publisher="CN=1B39DBA8-6065-469E-B729-A7E6A5BB9B74"
+    Version="0.1.7.0" />
 
-  <mp:PhoneIdentity PhoneProductId="B80B1FCA-B7E4-49BF-8D59-27C91E539E51" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="1f32da33-d6df-4458-b079-c1423192232f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Gather</DisplayName>
-    <PublisherDisplayName>Patrick</PublisherDisplayName>
+    <DisplayName>Phase1 Gather</DisplayName>
+    <PublisherDisplayName>MoonBeam</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

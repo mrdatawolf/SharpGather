@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Gather.Helpers;
+using System;
 using System.Threading.Tasks;
-
-using Gather.Helpers;
-
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Core;

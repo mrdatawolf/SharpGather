@@ -2,43 +2,19 @@
     x:Class="Gather.Views.GatherPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Gather.Models"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-
     <Grid x:Name="ContentArea">
-        <controls:AdaptiveGridView
-            Padding="{StaticResource MediumLeftRightMargin}"
-            animations:Connected.ListItemElementName="itemThumbnail"
-            animations:Connected.ListItemKey="animationKeyGather"
-            DesiredWidth="180"
-            IsItemClickEnabled="True"
-            ItemClick="OnItemClick"
-            ItemHeight="160"
-            ItemsSource="{x:Bind Source,Mode=OneWay}"
-            SelectionMode="None"
-            StretchContentForSingleRow="False">
-            <controls:AdaptiveGridView.ItemTemplate>
-                <DataTemplate x:DataType="models:Resource">
-                    <Grid
-                        x:Name="itemThumbnail"
-                        Padding="{StaticResource XSmallLeftTopRightBottomMargin}"
-                        Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xE946;" />
-                            <TextBlock
-                                Margin="{StaticResource XXSmallTopMargin}"
-                                HorizontalAlignment="Center"
-                                Style="{ThemeResource BodyTextStyle}"
-                                Text="{x:Bind name}" />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </controls:AdaptiveGridView.ItemTemplate>
-        </controls:AdaptiveGridView>
+        <StackPanel Margin="70,33,0,0" Height="25" VerticalAlignment="Top" Background="#FF383838"/>
+        <controls:DataGrid x:Name="ResourcesGrid"
+                  ItemsSource="{x:Bind Source, Mode=OneWay}"
+                  CanUserSortColumns="False"
+                  AutoGenerateColumns="True"
+                  Background="White"
+                  SelectedItem="itemSelected"
+                  FontSize="8"/>
     </Grid>
 </Page>

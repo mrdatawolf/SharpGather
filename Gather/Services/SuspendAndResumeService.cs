@@ -1,10 +1,7 @@
-﻿using System;
-using System.Reflection;
-using System.Threading.Tasks;
-
-using Gather.Activation;
+﻿using Gather.Activation;
 using Gather.Helpers;
-
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
