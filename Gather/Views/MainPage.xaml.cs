@@ -1,24 +1,22 @@
-﻿using System;
+﻿using HttpUtils;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
-using System.Diagnostics;
-using HttpUtils;
-using Windows.Storage;
 
 namespace Gather.Views
 {
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
-        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-        Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        string apiBaseUrl = "https://phase1.datawolf.online/api";
-        string email;
-        string password;
-        string accessToken;
-        bool isLoggedIn = false;
-
-        RestClient restClient = new RestClient();
+        private Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        private readonly string apiBaseUrl = "https://phase1.datawolf.online/api";
+        private string email;
+        private string password;
+        private string accessToken;
+        private bool isLoggedIn = false;
+        private RestClient restClient = new RestClient();
 
 
         public MainPage()
@@ -51,7 +49,7 @@ namespace Gather.Views
             Windows.Storage.ApplicationDataContainer container = localSettings.CreateContainer("GatherContainer", Windows.Storage.ApplicationDataCreateDisposition.Always);
             if (localSettings.Containers.ContainsKey("GatherContainer"))
             {
-                if(localSettings.Containers["GatherContainer"].Values.ContainsKey("accessToken"))
+                if (localSettings.Containers["GatherContainer"].Values.ContainsKey("accessToken"))
                 {
                     accessToken = localSettings.Containers["GatherContainer"].Values["accessToken"].ToString();
                     restClient.AccessToken = accessToken;
@@ -60,7 +58,8 @@ namespace Gather.Views
                     loginButton.IsEnabled = false;
                     emailTextbox.IsEnabled = false;
                     passwordBox.IsEnabled = false;
-                } else
+                }
+                else
                 {
                     statusText.Text = "Not logged in";
                 }
@@ -102,7 +101,7 @@ namespace Gather.Views
             }
         }
 
-        private bool isPasswordValid()
+        private bool IsPasswordValid()
         {
             if (string.IsNullOrEmpty(password))
             {
@@ -112,7 +111,7 @@ namespace Gather.Views
             return true;
         }
 
-        private bool isEmailValid()
+        private bool IsEmailValid()
         {
             if (string.IsNullOrEmpty(email) || !email.ToLower().Contains("@"))
             {
@@ -133,18 +132,19 @@ namespace Gather.Views
 
         private void loginButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if(isLoggedIn)
+            if (isLoggedIn)
             {
                 statusText.Text = "Already logged in!";
             }
-            else if (!isEmailValid())
+            else if (!IsEmailValid())
             {
                 statusText.Text = "Email issue found!";
             }
-            else if (!isPasswordValid())
+            else if (!IsPasswordValid())
             {
                 statusText.Text = "Password issue found!";
-            } else
+            }
+            else
             {
                 DoLogin();
             }

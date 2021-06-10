@@ -1,28 +1,22 @@
-﻿using System;
+﻿using Gather.Core.Models;
+using Gather.Core.Services;
+using Gather.Services;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-
-using Gather.Core.Models;
-using Gather.Core.Services;
-using Gather.Services;
-
-using Microsoft.Toolkit.Uwp.UI.Animations;
-
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Gather.Models;
+using HttpUtils;
+using System.Collections.ObjectModel;
 
 namespace Gather.Views
 {
     public sealed partial class GatherDetailPage : Page, INotifyPropertyChanged
     {
-        private SampleOrder _item;
-
-        public SampleOrder Item
-        {
-            get { return _item; }
-            set { Set(ref _item, value); }
-        }
+        public ObservableCollection<Resource> Source { get; } = new ObservableCollection<Resource>();
+        public static Resources _allResources;
 
         public GatherDetailPage()
         {
@@ -32,26 +26,42 @@ namespace Gather.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            this.RegisterElementForConnectedAnimation("animationKeyGather", itemHero);
-            if (e.Parameter is long orderID)
+            //this.RegisterElementForConnectedAnimation("animationKeyGather", itemHero);
+            Source.Clear();
+
+            string ApiBaseUrl = "https://phase1.datawolf.online/api";
+            string v = GatherAccessToken();
+            string AccessToken = v;
+            RestClient restClient = new RestClient();
+            restClient.AccessToken = AccessToken;
+            for (int i = 1; i < 13; i++)
             {
-                var data = await SampleDataService.GetContentGridDataAsync();
-                Item = data.First(i => i.OrderID == orderID);
+                restClient.EndPoint = ApiBaseUrl + "/initial_gather/" + i;
+                string jsonReturn = restClient.MakeRequest();
+                Resource testc = Newtonsoft.Json.JsonConvert.DeserializeObject<Resource>(jsonReturn);
+                Source.Add(testc);
             }
         }
 
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        public static string GatherAccessToken()
+        {
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            return localSettings.Containers["GatherContainer"].Values["accessToken"].ToString();
+        }
+
+        /*protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
             if (e.NavigationMode == NavigationMode.Back)
             {
                 NavigationService.Frame.SetListDataItemForNextConnectedAnimation(Item);
             }
-        }
+        }*/
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(storage, value))
             {

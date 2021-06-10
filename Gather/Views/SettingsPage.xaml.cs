@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Gather.Helpers;
+using Gather.Services;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-
-using Gather.Helpers;
-using Gather.Services;
-
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,12 +11,27 @@ using Windows.UI.Xaml.Navigation;
 namespace Gather.Views
 {
     // TODO WTS: Add other settings as necessary. For help see https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/pages/settings-codebehind.md
-    // TODO WTS: Change the URL for your privacy policy in the Resource File, currently set to https://YourPrivacyUrlGoesHere
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
         public string AccessToken;
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         private ElementTheme _elementTheme = ThemeSelectorService.Theme;
+        private bool _isRunOfflineEnabled;
+        public bool? IsRunOfflineEnabled
+        {
+            get { return _isRunOfflineEnabled; }
+            set { Set(ref _isRunOfflineEnabled, (bool)value);  }
+        }
+
+        /*private async void CheckBoxChecked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            await Windows.Storage.ApplicationData.Current.LocalSettings.SaveAsync(nameof(IsRunOfflineEnabled), true);
+        }*/
+
+        /*private async void CheckBoxUnchecked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            await Windows.Storage.ApplicationData.Current.LocalSettings.SaveAsync(nameof(IsRunOfflineEnabled), false);
+        }*/ 
 
         public ElementTheme ElementTheme
         {
@@ -46,6 +58,7 @@ namespace Gather.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             await InitializeAsync();
+            IsRunOfflineEnabled = await Windows.Storage.ApplicationData.Current.LocalSettings.ReadAsync<bool>(nameof(IsRunOfflineEnabled));
         }
 
         private async Task InitializeAsync()
@@ -76,7 +89,7 @@ namespace Gather.Views
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(storage, value))
             {
@@ -91,7 +104,7 @@ namespace Gather.Views
 
         private void GatherLocalData()
         {
-            AccessToken = "no token found";
+            AccessToken = "No token found!";
             Windows.Storage.ApplicationDataContainer container = localSettings.CreateContainer("GatherContainer", Windows.Storage.ApplicationDataCreateDisposition.Always);
             if (localSettings.Containers.ContainsKey("GatherContainer"))
             {

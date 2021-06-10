@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Dynamic;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Dynamic;
 
 public enum HttpVerb
 {
@@ -111,7 +111,8 @@ namespace HttpUtils
                 {
                     writeStream.Write(bytes, 0, bytes.Length);
                 }
-            } else
+            }
+            else
             {
                 request.Headers.Add("Authorization", AccessToken);
             }

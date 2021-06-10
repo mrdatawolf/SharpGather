@@ -1,47 +1,40 @@
-﻿using System;
+﻿using Gather.Models;
+using HttpUtils;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Threading.Tasks;
-
-using Gather.Models;
 
 namespace Gather.Services
 {
     public static class ResourceDataService
     {
-        private static IEnumerable<Resource> _allResources;
+        public static List<string> _allResources;
 
-        private static IEnumerable<Resource> AllResources()
+        public static async Task<List<string>> GetContentGridDataAsync()
         {
-            return new List<Resource>()
-            {
-                new Resource()
-                {
-                    id = 1,
-                    name = "Stone",
-                },
-                new Resource()
-                {
-                    id = 2,
-                    name = "Water",
-                },
-                new Resource()
-                {
-                    id = 3,
-                    name = "Iron",
-                }
-            };
-        }
-
-        public static async Task<IEnumerable<Resource>> GetContentGridDataAsync()
-        {
+            string ApiBaseUrl = "https://phase1.datawolf.online/api";
+            string AccessToken = GatherAccessToken();
+            RestClient restClient = new RestClient(ApiBaseUrl + "/initial_gather");
+            restClient.AccessToken = AccessToken;
+            string jsonReturn = restClient.MakeRequest();
+            Debug.WriteLine(jsonReturn);
             if (_allResources == null)
             {
-                _allResources = AllResources();
+                _allResources = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(jsonReturn);
+               //_allResources = Newtonsoft.Json.JsonConvert.DeserializeObject<Resources>(jsonReturn);
             }
-
+            
             await Task.CompletedTask;
+
             return _allResources;
         }
+
+        public static string GatherAccessToken()
+        {
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            return localSettings.Containers["GatherContainer"].Values["accessToken"].ToString();
+        }
     }
+
 }

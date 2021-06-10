@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Gather.Services;
+using System;
 using System.Threading.Tasks;
-
-using Gather.Services;
-
 using Windows.ApplicationModel.Activation;
 
 namespace Gather.Activation

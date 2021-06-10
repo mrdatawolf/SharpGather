@@ -1,6 +1,8 @@
-﻿namespace HttpUtils
+﻿using System.Collections.Generic;
+
+namespace HttpUtils
 {
-    internal class LoginObject
+    public class LoginObject
     {
         public string access_token;
         public string token_type;
