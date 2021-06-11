@@ -1,7 +1,9 @@
 ﻿using Gather.Models;
 using HttpUtils;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -32,15 +34,21 @@ namespace Gather.Views
             {
                 restClient.EndPoint = ApiBaseUrl + "/initial_gather/" + i;   
                 string jsonReturn = restClient.MakeRequest();
-                Resource testc = Newtonsoft.Json.JsonConvert.DeserializeObject<Resource>(jsonReturn);
-                Source.Add(testc);
+                try
+                {
+                    Resource testc = Newtonsoft.Json.JsonConvert.DeserializeObject<Resource>(jsonReturn);
+                    Source.Add(testc);
+                } catch (Exception)
+                {
+
+                }
             }
         }
         public static string GatherAccessToken()
         {
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-
-            return localSettings.Containers["GatherContainer"].Values["accessToken"].ToString();
+            var token = (localSettings.Containers["GatherContainer"].Values["accessToken"] == null) ? null : localSettings.Containers["GatherContainer"].Values["accessToken"].ToString();
+            return token;
         }
         private void OnItemClick(object sender, ItemClickEventArgs e)
         {
