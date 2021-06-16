@@ -10,7 +10,7 @@
   <Identity
     Name="49023MoonBeam.Phase1Gather"
     Publisher="CN=1B39DBA8-6065-469E-B729-A7E6A5BB9B74"
-    Version="0.1.14.0" />
+    Version="0.1.16.0" />
 
   <mp:PhoneIdentity PhoneProductId="1f32da33-d6df-4458-b079-c1423192232f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -41,7 +41,8 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
         <uap:InitialRotationPreference>
-          <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/>
+          <uap:Rotation Preference="landscapeFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
 
       <Extensions>
