@@ -10,11 +10,64 @@
     <Grid x:Name="ContentArea">
         <StackPanel Margin="70,33,0,0" Height="25" VerticalAlignment="Top" Background="#FF383838"/>
         <controls:DataGrid x:Name="ResourcesGrid"
+                  AlternatingRowBackground="LightGray"
                   ItemsSource="{x:Bind Source, Mode=OneWay}"
                   CanUserSortColumns="False"
-                  AutoGenerateColumns="True"
+                  AutoGenerateColumns="False"
                   Background="White"
                   SelectedItem="itemSelected"
-                  FontSize="8"/>
+                  FontSize="6">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" />
+                <controls:DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount}" />
+                <controls:DataGridTextColumn Header="Gather Rate" Binding="{Binding Path=GatherRate}" />
+                <controls:DataGridTemplateColumn Header="Workers">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock x:Name="WorkerTotal" Text="{Binding Path=Workers}" />
+                                <Button Name="AddWorker" Visibility="{Binding CanAddWorker}">Add Worker</Button>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridTemplateColumn Header="Tools">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock x:Name="ToolTotal" Text="{Binding Path=Tools}" />
+                                <Button Name="AddWorker" Visibility="{Binding CanAddTool}">Add Tool</Button>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridTemplateColumn Header="Foremen">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock x:Name="ForemanTotal" Text="{Binding Path=Tools}" />
+                                <Button Name="AddWorker" Visibility="{Binding CanAddForeman}">Add Forman</Button>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridCheckBoxColumn Header="Is Automated" Binding="{Binding Path=Automated}" />
+                <controls:DataGridCheckBoxColumn Header="Is Enabled" Binding="{Binding Path=Enabled}" />
+                <controls:DataGridTemplateColumn Header="Enable">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="Enable" Visibility="{Binding CanEnable}">Enable</Button>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridTemplateColumn Header="Automate">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="Automate" Visibility="{Binding CanAutomate}">Automate</Button>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
     </Grid>
 </Page>

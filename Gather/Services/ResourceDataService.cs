@@ -25,7 +25,6 @@ namespace Gather.Services
             }
             
             await Task.CompletedTask;
-
             return _allResources;
         }
 
